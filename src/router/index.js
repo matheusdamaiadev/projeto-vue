@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 import LoginView from '@/views/auth/LoginView.vue'
 import RegisterView from '@/views/auth/RegisterView.vue'
-import DashboardView from '@/views/DashboardView.vue'
+
 
 const router = createRouter({
 
@@ -28,13 +28,24 @@ const router = createRouter({
     },
 
     {
-      path: '/dashboard',
-      name: 'dashboard',
-      component: DashboardView
+      path:'/dashboard',
+      component: () => import('@/layouts/DashboardLayout.vue'),
+      children:[
+        {
+          path:'',
+          component: () => import('@/views/HomeView.vue')
+        },
+
+        {
+          path:'tasks',
+          component: () => import('@/views/TasksView.vue')
+        }
+      ]
     }
 
   ]
 
 })
+
 
 export default router
